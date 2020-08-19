@@ -1,0 +1,22 @@
+body {
+  background: #fafafa;
+}
+.my-library {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-card {
+  border: 3px solid rgb(99, 49, 16);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.book-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.book-card li {
+  padding: 5px 0;
+}
