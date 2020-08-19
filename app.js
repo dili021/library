@@ -21,6 +21,7 @@ const libraryEl = document.querySelector(".my-library");
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  render();
 }
 
 class Book {
@@ -33,8 +34,13 @@ class Book {
   }
 }
 book1 = new Book("L.O.T.R.", "J.R.Tolkien", 5, true, 600);
-book2 = new Book("Rich Dad Poor Dad", "Robert Kiyosaki", 5, true, 250);
+book2 = new Book("Rich Dad Poor Dad", "Robert Kiyosaki", 5, false, 250);
 book3 = new Book("Two States", "Chetan Bhagat", 5, true, 400);
+
+function changeReadStatus(book) {
+  // console.log(book);
+  // book.isRead = book.isRead ? false : true;
+}
 
 function createDOMLibrary() {
   return myLibrary
@@ -43,16 +49,36 @@ function createDOMLibrary() {
   <div class="book-card">
     <ul>
       <li>${book.title}</li>
-      <li>by: ${book.author}</li>
+      <li>${book.author}</li>
       <li>Rating:${book.rating}</li>
-      <li>Already read: ${book.isRead}</li>
+
       <li>${book.pages} pages</li>
     </ul>
-    <button id="remove-book" onclick="this.closest('.book-card').remove()" >X</button>
+    <div class="book-buttons">
+      <div class="is-read">
+       <button onclick="self.innerText = ${
+         book.isRead ? "Already read" : "Not yet read"
+       }">${book.isRead ? "Already read" : "Not yet read"}</button>
+
+      </div>
+      <button id="remove-book" onclick="this.closest('.book-card').remove()" >X</button>
+    </div>
   </div>
   `
     )
     .join("");
+}
+
+function addNewBook(e) {
+  e.preventDefault();
+  const book = new Book(
+    (title = e.target.title.value),
+    (author = e.target.author.value),
+    (rating = e.target.rating.value),
+    (isRead = e.target.isRead.value),
+    (pages = e.target.pages.value)
+  );
+  addBookToLibrary(book);
 }
 
 function render() {
@@ -63,8 +89,8 @@ function renderForm() {
   document.body.appendChild(bookForm);
 }
 
+bookForm.addEventListener("submit", addNewBook);
 formButton.addEventListener("click", renderForm);
-
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);

@@ -1,22 +1,49 @@
 body {
-  background: #fafafa;
+  background: url("background.jpg");
+  color: rgb(247, 243, 243);
+  text-align: center;
+  font-family: Helvetica;
 }
+
+h1 {
+  font-size: 5rem;
+  margin-bottom: 0;
+}
+
 .my-library {
+  margin-top: 100px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .book-card {
-  border: 3px solid rgb(99, 49, 16);
+  display: flex;
+  flex-direction: column;
+  color: white;
+  text-align: center;
+  background: rgba(43, 20, 2, 0.568);
   padding: 15px;
-  border-radius: 10px;
+  margin: 5px;
+  min-width: 20%;
+  border-radius: 5px;
+  justify-content: space-between;
 }
 
 .book-card ul {
   list-style: none;
+  margin-top: 0;
   padding: 0;
 }
 
 .book-card li {
-  padding: 5px 0;
+  padding: 10px 0;
+}
+.book-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-card li:first-child {
+  font-size: 1.7rem;
 }
