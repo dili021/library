@@ -1,7 +1,7 @@
-const formButton = document.createElement("button");
-formButton.innerText = "Add New Book";
-document.body.insertAdjacentElement("beforeend", formButton);
-const bookForm = document.createElement("form");
+const formButton = document.createElement('button');
+formButton.innerText = 'Add New Book';
+document.body.insertAdjacentElement('beforeend', formButton);
+const bookForm = document.createElement('form');
 
 bookForm.innerHTML = `
   <label htmlFor="title">title</label>
@@ -19,14 +19,45 @@ bookForm.innerHTML = `
   <button type="submit">Add</button>
 `;
 
-const libraryEl = document.querySelector(".my-library");
+const libraryEl = document.querySelector('.my-library');
 
-const myLibrary = JSON.parse(localStorage.getItem("library"))
-  ? JSON.parse(localStorage.getItem("library"))
+const myLibrary = JSON.parse(localStorage.getItem('library'))
+  ? JSON.parse(localStorage.getItem('library'))
   : [];
 
+function createDOMLibrary() {
+  return myLibrary
+    .map(
+      (book, idx) => `
+    <div class="book-card">
+      <ul>
+        <li>${book.title}</li>
+        <li>${book.author}</li>
+        <li>Rating:${book.rating}</li>
+
+        <li>${book.pages} pages</li>
+      </ul>
+      <div class="book-buttons">
+        <div class="is-read">
+         <button onclick="toggleStatus(${idx})" >${
+  book.isRead ? 'Already read' : 'Not read yet'
+}</button>
+
+        </div>
+        <button id="remove-book" onclick="this.closest('.book-card').remove(); myLibrary.splice(${idx}, 1); updateLibraryLS()" >X</button>
+      </div>
+    </div>
+    `,
+    )
+    .join('');
+}
+
+function render() {
+  libraryEl.innerHTML = createDOMLibrary();
+}
+
 function updateLibraryLS() {
-  localStorage.setItem("library", JSON.stringify(myLibrary));
+  localStorage.setItem('library', JSON.stringify(myLibrary));
 }
 
 function addBookToLibrary(book) {
@@ -51,42 +82,15 @@ function toggleStatus(idx) {
   render();
 }
 
-function createDOMLibrary() {
-  return myLibrary
-    .map(
-      (book, idx) => `
-  <div class="book-card">
-    <ul>
-      <li>${book.title}</li>
-      <li>${book.author}</li>
-      <li>Rating:${book.rating}</li>
-
-      <li>${book.pages} pages</li>
-    </ul>
-    <div class="book-buttons">
-      <div class="is-read">
-       <button onclick="toggleStatus(${idx})" >${
-        book.isRead ? "Already read" : "Not read yet"
-      }</button>
-
-      </div>
-      <button id="remove-book" onclick="this.closest('.book-card').remove(); myLibrary.splice(${idx}, 1); updateLibraryLS()" >X</button>
-    </div>
-  </div>
-  `
-    )
-    .join("");
-}
-
 function inputIsValid(inputsArray) {
   let result = true;
   inputsArray.forEach(input => {
-    if (input === "") {
+    if (input === '') {
       result = false;
     }
   });
   if (!result) {
-    alert("You need to fill out at least the title and author");
+    alert('You need to fill out at least the title and author');
   }
   return result;
 }
@@ -94,25 +98,21 @@ function inputIsValid(inputsArray) {
 function addNewBook(e) {
   e.preventDefault();
   const book = new Book(
-    (title = e.target.title.value),
-    (author = e.target.author.value),
-    (rating = e.target.rating.value),
-    (isRead = e.target.isRead.value),
-    (pages = e.target.pages.value)
+    e.target.title.value,
+    e.target.author.value,
+    e.target.rating.value,
+    e.target.isRead.value,
+    e.target.pages.value,
   );
-  if (inputIsValid([title, author])) {
+  if (inputIsValid([e.target.title.value, e.target.author.value])) {
     addBookToLibrary(book);
   }
-}
-
-function render() {
-  libraryEl.innerHTML = createDOMLibrary();
 }
 
 function renderForm() {
   document.body.appendChild(bookForm);
 }
 
-bookForm.addEventListener("submit", addNewBook);
-formButton.addEventListener("click", renderForm);
+bookForm.addEventListener('submit', addNewBook);
+formButton.addEventListener('click', renderForm);
 render();
