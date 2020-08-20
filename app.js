@@ -29,10 +29,6 @@ function updateLibraryLS() {
   localStorage.setItem("library", JSON.stringify(myLibrary));
 }
 
-function returnLibraryFromLS() {
-  localStorage.getItem(JSON.parse(library));
-}
-
 function addBookToLibrary(book) {
   myLibrary.push(book);
   updateLibraryLS();
@@ -48,10 +44,6 @@ class Book {
     this.pages = pages;
   }
 }
-
-const book1 = new Book("L.O.T.R.", "J.R.Tolkien", 5, true, 600);
-const book2 = new Book("Rich Dad Poor Dad", "Robert Kiyosaki", 5, false, 250);
-const book3 = new Book("Two States", "Chetan Bhagat", 5, true, 400);
 
 function toggleStatus(idx) {
   const book = myLibrary[idx];
