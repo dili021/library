@@ -19,6 +19,7 @@ bookForm.innerHTML = `
   <button type="submit">Add</button>
 `;
 
+
 const libraryEl = document.querySelector(".my-library");
 
 const myLibrary = JSON.parse(localStorage.getItem("library"))
@@ -67,7 +68,7 @@ function createDOMLibrary() {
       <div class="is-read">
        <button onclick="toggleStatus(${idx})" >${
         book.isRead ? "Already read" : "Not read yet"
-      }</button>
+        }</button>
 
       </div>
       <button id="remove-book" onclick="this.closest('.book-card').remove(); myLibrary.splice(${idx}, 1); updateLibraryLS()" >X</button>
