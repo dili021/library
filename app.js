@@ -115,4 +115,6 @@ function renderForm() {
 
 bookForm.addEventListener('submit', addNewBook);
 formButton.addEventListener('click', renderForm);
+bookForm.addEventListener('submit', addNewBook);
+formButton.addEventListener('click', renderForm);
 render();
