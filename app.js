@@ -33,19 +33,26 @@ class Book {
     this.pages = pages;
   }
 }
+
+Book.prototype.toggleIsRead = function toggleIsRead() {
+  this.isRead = !this.isRead;
+  render();
+};
+
+function toggleStatus(idx) {
+  const book = myLibrary[idx];
+  book.isRead = !book.isRead;
+  render();
+}
+
 book1 = new Book("L.O.T.R.", "J.R.Tolkien", 5, true, 600);
 book2 = new Book("Rich Dad Poor Dad", "Robert Kiyosaki", 5, false, 250);
 book3 = new Book("Two States", "Chetan Bhagat", 5, true, 400);
 
-function changeReadStatus(book) {
-  // console.log(book);
-  // book.isRead = book.isRead ? false : true;
-}
-
 function createDOMLibrary() {
   return myLibrary
     .map(
-      book => `
+      (book, idx) => `
   <div class="book-card">
     <ul>
       <li>${book.title}</li>
@@ -56,9 +63,9 @@ function createDOMLibrary() {
     </ul>
     <div class="book-buttons">
       <div class="is-read">
-       <button onclick="self.innerText = ${
-         book.isRead ? "Already read" : "Not yet read"
-       }">${book.isRead ? "Already read" : "Not yet read"}</button>
+       <button onclick="toggleStatus(${idx})" >${
+        book.isRead ? "Already read" : "Not read yet"
+      }</button>
 
       </div>
       <button id="remove-book" onclick="this.closest('.book-card').remove()" >X</button>
