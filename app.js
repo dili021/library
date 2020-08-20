@@ -16,12 +16,19 @@ bookForm.innerHTML = `
   <button type="submit">Add</button>
 `;
 
-const myLibrary = [];
+const myLibrary = JSON.parse(localStorage.getItem("library"))
+  ? JSON.parse(localStorage.getItem("library"))
+  : [];
 const libraryEl = document.querySelector(".my-library");
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  updateLibraryLS();
   render();
+}
+
+function updateLibraryLS() {
+  localStorage.setItem("library", JSON.stringify(myLibrary));
 }
 
 class Book {
@@ -33,11 +40,6 @@ class Book {
     this.pages = pages;
   }
 }
-
-Book.prototype.toggleIsRead = function toggleIsRead() {
-  this.isRead = !this.isRead;
-  render();
-};
 
 function toggleStatus(idx) {
   const book = myLibrary[idx];
@@ -65,10 +67,10 @@ function createDOMLibrary() {
       <div class="is-read">
        <button onclick="toggleStatus(${idx})" >${
         book.isRead ? "Already read" : "Not read yet"
-      }</button>
+        }</button>
 
       </div>
-      <button id="remove-book" onclick="this.closest('.book-card').remove()" >X</button>
+      <button id="remove-book" onclick="this.closest('.book-card').remove(); myLibrary.splice(${idx}, 1); updateLibraryLS()" >X</button>
     </div>
   </div>
   `
@@ -98,7 +100,4 @@ function renderForm() {
 
 bookForm.addEventListener("submit", addNewBook);
 formButton.addEventListener("click", renderForm);
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
 render();
