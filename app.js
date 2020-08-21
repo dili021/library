@@ -1,5 +1,5 @@
 /*
-  eslint-disable no-alert
+  eslint-disable no-alert, no-return-assign
 */
 const formButton = document.createElement('button');
 formButton.innerText = 'Add New Book';
@@ -42,7 +42,7 @@ function createDOMLibrary() {
       </ul>
       <div class="book-buttons">
         <div class="is-read">
-         <button id="toggle" >${
+         <button class="toggle" onclick="${(book.isRead = !book.isRead)}" >${
   book.isRead ? 'Already read' : 'Not read yet'
 }</button>
 
@@ -80,7 +80,7 @@ class Book {
 }
 
 function toggleStatus(e) {
-  if (e.target === document.querySelector('#toggle')) {
+  if (e.target.classList.contains('toggle')) {
     e.target.innerText = e.target.innerText === 'Already read' ? 'Not read yet' : 'Already read';
   }
 }
