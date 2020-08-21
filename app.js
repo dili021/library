@@ -1,3 +1,6 @@
+/*
+  eslint-disable no-unused-vars, no-alert
+*/
 const formButton = document.createElement('button');
 formButton.innerText = 'Add New Book';
 document.body.insertAdjacentElement('beforeend', formButton);
@@ -29,7 +32,7 @@ function createDOMLibrary() {
   return myLibrary
     .map(
       (book, idx) => `
-    <div class="book-card">
+    <div id="book-${idx}" class="book-card">
       <ul>
         <li>${book.title}</li>
         <li>${book.author}</li>
@@ -39,7 +42,7 @@ function createDOMLibrary() {
       </ul>
       <div class="book-buttons">
         <div class="is-read">
-         <button onclick="toggleStatus(${idx})" >${
+         <button id="toggle" >${
   book.isRead ? 'Already read' : 'Not read yet'
 }</button>
 
@@ -76,10 +79,8 @@ class Book {
   }
 }
 
-function toggleStatus(idx) {
-  const book = myLibrary[idx];
-  book.isRead = !book.isRead;
-  render();
+function toggleStatus(e) {
+  e.target.innerText = e.target.innerText === 'Already read' ? 'Not read yet' : 'Already read';
 }
 
 function inputIsValid(inputsArray) {
@@ -112,7 +113,7 @@ function addNewBook(e) {
 function renderForm() {
   document.body.appendChild(bookForm);
 }
-
+libraryEl.addEventListener('click', toggleStatus);
 bookForm.addEventListener('submit', addNewBook);
 formButton.addEventListener('click', renderForm);
 bookForm.addEventListener('submit', addNewBook);
