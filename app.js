@@ -1,5 +1,5 @@
 /*
-  eslint-disable no-unused-vars, no-alert
+  eslint-disable no-alert
 */
 const formButton = document.createElement('button');
 formButton.innerText = 'Add New Book';
@@ -80,7 +80,9 @@ class Book {
 }
 
 function toggleStatus(e) {
-  e.target.innerText = e.target.innerText === 'Already read' ? 'Not read yet' : 'Already read';
+  if (e.target === document.querySelector('#toggle')) {
+    e.target.innerText = e.target.innerText === 'Already read' ? 'Not read yet' : 'Already read';
+  }
 }
 
 function inputIsValid(inputsArray) {
